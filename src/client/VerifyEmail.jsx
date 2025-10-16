@@ -16,7 +16,7 @@ function VerifyEmail() {
 
     const verify = async () => {
       try {
-        // Backend portunu açıkça belirt
+       
         const res = await axios.get(`http://localhost:3000/api/verify?token=${token}`);
         setStatus(res.data || "Mail doğrulandı, artık giriş yapabilirsiniz!");
       } catch (err) {
