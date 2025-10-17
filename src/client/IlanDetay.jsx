@@ -14,12 +14,9 @@ function IlanDetay() {
       const response = await axios.get(`http://localhost:3000/home/ilandetail/${id}`);
       const home = response.data.home;
 
-      home.images = home.images 
-        ? typeof home.images === "string" 
-          ? home.images.split(',') 
-          : home.images 
-        : [];
-
+      // Backend düzeltildiği için images işlemine gerek yok
+      // home.images zaten dizi olarak gelecek
+      
       setIlan(home);
     } catch (error) {
       console.error("Verileri çekerken hata oldu:", error);
@@ -61,9 +58,11 @@ function IlanDetay() {
     </div>
   );
 
+  // images dizisini güvenli bir şekilde al
+  const images = ilan.images || [];
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-20">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
@@ -88,33 +87,29 @@ function IlanDetay() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-6 max-w-6xl">
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Left Column - Images and Details */}
           <div className="lg:w-7/12">
-            {/* Image Gallery */}
             <div className="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
-              {ilan.images.length > 0 ? (
+              {images.length > 0 ? (
                 <>
                   <div className="relative bg-gray-100">
                     <img
-                      src={`http://localhost:3000/uploads/${ilan.images[selectedImage]}`}
+                      src={`http://localhost:3000/uploads/${images[selectedImage]}`}
                       alt={`ilan-resim-${selectedImage}`}
                       className="w-full h-80 md:h-96 object-cover"
                     />
-                    {ilan.images.length > 1 && (
+                    {images.length > 1 && (
                       <div className="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-                        {selectedImage + 1} / {ilan.images.length}
+                        {selectedImage + 1} / {images.length}
                       </div>
                     )}
                   </div>
                   
-                  {/* Image thumbnails */}
-                  {ilan.images.length > 1 && (
+                  {images.length > 1 && (
                     <div className="p-4 border-t border-gray-200">
                       <div className="flex space-x-2 overflow-x-auto">
-                        {ilan.images.map((resim, index) => (
+                        {images.map((resim, index) => (
                           <button
                             key={index}
                             onClick={() => setSelectedImage(index)}
@@ -145,7 +140,6 @@ function IlanDetay() {
               )}
             </div>
 
-            {/* Property Details */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-6 pb-4 border-b border-gray-200">Özellikler</h2>
               
@@ -169,8 +163,20 @@ function IlanDetay() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Metrekare</p>
-                    <p className="font-semibold text-gray-800">{ilan.metrekare} m²</p>
+                    <p className="text-sm text-gray-500">Brüt Metrekare</p>
+                    <p className="font-semibold text-gray-800">{ilan.brut_metrekare} m²</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Net Metrekare</p>
+                    <p className="font-semibold text-gray-800">{ilan.net_metrekare} m²</p>
                   </div>
                 </div>
 
@@ -187,6 +193,20 @@ function IlanDetay() {
                   </div>
                 </div>
 
+                {ilan.numara && (
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center mr-4">
+                      <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">Telefon</p>
+                      <p className="font-semibold text-gray-800">{ilan.numara}</p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center mr-4">
                     <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -201,13 +221,13 @@ function IlanDetay() {
               </div>
             </div>
 
-            {/* Description */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Açıklama</h2>
-              <p className="text-gray-700 leading-relaxed whitespace-pre-line">{ilan.aciklama}</p>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                {ilan.aciklama || "Açıklama bulunmuyor."}
+              </p>
             </div>
 
-            {/* Location */}
             <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Adres</h2>
               <div className="flex items-start">
@@ -225,40 +245,41 @@ function IlanDetay() {
             </div>
           </div>
 
-          {/* Right Column - Price and Contact */}
           <div className="lg:w-5/12">
-            {/* Price Card */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 sticky top-24">
               <div className="text-center mb-6">
-                <div className="text-3xl font-bold text-gray-900 mb-2">{ilan.fiyat} TL</div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {new Intl.NumberFormat('tr-TR').format(ilan.fiyat)} TL
+                </div>
                 <div className="text-sm text-gray-500">Fiyat</div>
               </div>
 
-              {/* Quick Info */}
               <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-3 gap-4 text-sm">
                   <div className="text-center">
                     <div className="font-semibold text-gray-800">{ilan.oda_sayisi}</div>
                     <div className="text-gray-500">Oda</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-gray-800">{ilan.metrekare} m²</div>
-                    <div className="text-gray-500">Brüt</div>
+                    <div className="font-semibold text-gray-800">{ilan.brut_metrekare}</div>
+                    <div className="text-gray-500">Brüt m²</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold text-gray-800">{ilan.net_metrekare}</div>
+                    <div className="text-gray-500">Net m²</div>
                   </div>
                 </div>
               </div>
 
-              {/* Contact Buttons */}
               <div className="space-y-3">
                 <button className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold text-lg hover:bg-orange-600 transition duration-200 shadow-sm">
-                  Telefon Numarası
+                  {ilan.numara ? `0${ilan.numara}` : 'Telefon Numarası'}
                 </button>
                 <button className="w-full border border-orange-500 text-orange-500 py-3 rounded-lg font-semibold text-lg hover:bg-orange-50 transition duration-200">
                   Mesaj Gönder
                 </button>
               </div>
 
-              {/* Safety Tips */}
               <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
                 <div className="flex items-start">
                   <svg className="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -272,7 +293,6 @@ function IlanDetay() {
               </div>
             </div>
 
-            {/* Seller Info */}
             <div className="bg-white rounded-lg border border-gray-200 p-6 mt-6">
               <h3 className="font-semibold text-gray-800 mb-4">Satıcı Bilgileri</h3>
               <div className="flex items-center">

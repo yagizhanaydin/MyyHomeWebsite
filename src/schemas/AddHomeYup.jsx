@@ -5,7 +5,8 @@ const AddSchemaYup = Yup.object().shape({
   ilce: Yup.string().required("İlçe zorunludur"),
   adres: Yup.string().required("Adres zorunludur"),
   odaSayisi: Yup.string().required("Oda sayısı zorunludur"),
-  metrekare: Yup.number().required("Metrekare zorunludur"),
+  brutMetrekare: Yup.number().required("Brüt metrekare zorunludur"),
+  netMetrekare: Yup.number().required("Net metrekare zorunludur"),
   fiyat: Yup.number().required("Fiyat zorunludur"),
   aciklama: Yup.string().required("Açıklama zorunludur"),
 });

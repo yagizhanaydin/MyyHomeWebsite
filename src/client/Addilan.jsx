@@ -9,13 +9,15 @@ function AddIlan() {
 
   const formik = useFormik({
     initialValues: {
-      aciklama: "",
-      fiyat: "",
-      odaSayisi: "",
-      metrekare: "",
       il: "",
       ilce: "",
       adres: "",
+      numara: "",
+      odaSayisi: "",
+      brutMetrekare: "",
+      netMetrekare: "",
+      fiyat: "",
+      aciklama: "",
     },
     validationSchema: AddSchemaYup,
     onSubmit: async (values) => {
@@ -30,9 +32,7 @@ function AddIlan() {
         });
 
         // Görselleri ekle
-        images.forEach((file) => {
-          formData.append("images", file);
-        });
+        images.forEach((file) => formData.append("images", file));
 
         const response = await axios.post(
           "http://localhost:3000/home/addilan",
@@ -74,8 +74,7 @@ function AddIlan() {
 
   // Resim silme
   const removeImage = (index) => {
-    const newImages = images.filter((_, i) => i !== index);
-    setImages(newImages);
+    setImages(images.filter((_, i) => i !== index));
   };
 
   return (
@@ -108,7 +107,6 @@ function AddIlan() {
                 <p className="text-red-600 text-sm mt-1">{formik.errors.il}</p>
               )}
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 İlçe
@@ -131,28 +129,43 @@ function AddIlan() {
             </div>
           </div>
 
-          {/* Adres */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Adres
-            </label>
-            <input
-              type="text"
-              placeholder="Mahalle, sokak, numara..."
-              {...formik.getFieldProps("adres")}
-              className={`w-full px-4 py-3 border rounded-lg ${
-                formik.touched.adres && formik.errors.adres
-                  ? "border-red-500"
-                  : "border-gray-300"
-              }`}
-            />
-            {formik.touched.adres && formik.errors.adres && (
-              <p className="text-red-600 text-sm mt-1">{formik.errors.adres}</p>
-            )}
+          {/* Adres ve Numara */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Adres
+              </label>
+              <input
+                type="text"
+                placeholder="Mahalle, sokak..."
+                {...formik.getFieldProps("adres")}
+                className={`w-full px-4 py-3 border rounded-lg ${
+                  formik.touched.adres && formik.errors.adres
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
+              />
+              {formik.touched.adres && formik.errors.adres && (
+                <p className="text-red-600 text-sm mt-1">
+                  {formik.errors.adres}
+                </p>
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Telefon Numarası
+              </label>
+              <input
+                type="text"
+                placeholder="Örn: 12/A"
+                {...formik.getFieldProps("numara")}
+                className="w-full px-4 py-3 border rounded-lg border-gray-300"
+              />
+            </div>
           </div>
 
-          {/* Oda Sayısı ve Metrekare */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Oda Sayısı, Brüt ve Net m² */}
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Oda Sayısı
@@ -173,24 +186,43 @@ function AddIlan() {
                 </p>
               )}
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Metrekare
+                Brüt m²
               </label>
               <input
                 type="number"
                 placeholder="Örn: 120"
-                {...formik.getFieldProps("metrekare")}
+                {...formik.getFieldProps("brutMetrekare")}
                 className={`w-full px-4 py-3 border rounded-lg ${
-                  formik.touched.metrekare && formik.errors.metrekare
+                  formik.touched.brutMetrekare && formik.errors.brutMetrekare
                     ? "border-red-500"
                     : "border-gray-300"
                 }`}
               />
-              {formik.touched.metrekare && formik.errors.metrekare && (
+              {formik.touched.brutMetrekare && formik.errors.brutMetrekare && (
                 <p className="text-red-600 text-sm mt-1">
-                  {formik.errors.metrekare}
+                  {formik.errors.brutMetrekare}
+                </p>
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Net m²
+              </label>
+              <input
+                type="number"
+                placeholder="Örn: 100"
+                {...formik.getFieldProps("netMetrekare")}
+                className={`w-full px-4 py-3 border rounded-lg ${
+                  formik.touched.netMetrekare && formik.errors.netMetrekare
+                    ? "border-red-500"
+                    : "border-gray-300"
+                }`}
+              />
+              {formik.touched.netMetrekare && formik.errors.netMetrekare && (
+                <p className="text-red-600 text-sm mt-1">
+                  {formik.errors.netMetrekare}
                 </p>
               )}
             </div>
@@ -237,9 +269,7 @@ function AddIlan() {
               }`}
             />
             {formik.touched.aciklama && formik.errors.aciklama && (
-              <p className="text-red-600 text-sm mt-1">
-                {formik.errors.aciklama}
-              </p>
+              <p className="text-red-600 text-sm mt-1">{formik.errors.aciklama}</p>
             )}
           </div>
 
@@ -287,7 +317,7 @@ function AddIlan() {
             )}
           </div>
 
-          {/* Gönder Butonu */}
+          {/* Submit */}
           <button
             type="submit"
             disabled={isSubmitting}
