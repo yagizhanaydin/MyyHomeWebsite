@@ -7,6 +7,7 @@ import AnaSayfa from './client/AnaSayfa';
 import IlanDetay from './client/IlanDetay';
 import AddIlan from './client/Addilan'; // Büyük harfle başlamalı
 import OdaYenilemeHizmetleri from './client/OdaYenilemeHizmetleri';
+import OdaYenilemeHizmetleriDetail from './client/OdaYenilemeHizmetleriDetail';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +22,8 @@ function App() {
         <Route path="/ilanekleme" element={<AddIlan />} /> 
         <Route path="/ilandetail/:id" element={<IlanDetay />} />
           <Route path="/odayenileme" element={<OdaYenilemeHizmetleri />} />
+      
+<Route path="/odayenilemedetail/:id" element={<OdaYenilemeHizmetleriDetail />} />
       </Routes>
     </Router>
   );
