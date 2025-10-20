@@ -27,15 +27,23 @@ function AnaSayfa() {
 
   return (
     <div className="p-6">
-      {/* Başlık ve ilan ekleme butonu */}
+      {/* Başlık ve butonlar */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Ana Sayfa</h1>
-        <button
-          onClick={() => navigate("/ilanekleme")}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-        >
-          İlan Ekle
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={() => navigate("/ilanekleme")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+          >
+            İlan Ekle
+          </button>
+          <button
+            onClick={() => navigate("/odayenileme")}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          >
+            Oda Yenileme Hizmetleri
+          </button>
+        </div>
       </div>
 
       {/* İlan listesi */}
@@ -45,7 +53,7 @@ function AnaSayfa() {
             <div
               key={item.id}
               className="border rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
-              onClick={() => navigate(`/ilandetail/${item.id}`)} // İlan detay sayfasına yönlendir
+              onClick={() => navigate(`/ilandetail/${item.id}`)}
             >
               {/* İlk resmi göster */}
               {item.images && item.images.length > 0 && (
