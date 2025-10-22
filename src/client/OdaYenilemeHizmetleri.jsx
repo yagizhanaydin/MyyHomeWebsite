@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import illerData from "../data/turkiye_il_ilce.json"; // <- src/data içinde olmalı
+import illerData from "../data/turkiye_il_ilce.json"; 
 
 function OdaYenilemeHizmetleri() {
   const [iller] = useState(

@@ -5,10 +5,11 @@ import Login from './client/Login';
 import VerifyEmail from './client/VerifyEmail';
 import AnaSayfa from './client/AnaSayfa';
 import IlanDetay from './client/IlanDetay';
-import AddIlan from './client/Addilan'; // Büyük harfle başlamalı
+import AddIlan from './client/Addilan'; 
 import OdaYenilemeHizmetleri from './client/OdaYenilemeHizmetleri';
 import OdaYenilemeHizmetleriDetail from './client/OdaYenilemeHizmetleriDetail';
-
+import CompanyRegister from './company/CompanyRegister';
+import AdminPanel from './admin/AdminPanel';
 function App() {
   const [count, setCount] = useState(0);
 
@@ -21,9 +22,10 @@ function App() {
         <Route path="/" element={<AnaSayfa />} />
         <Route path="/ilanekleme" element={<AddIlan />} /> 
         <Route path="/ilandetail/:id" element={<IlanDetay />} />
-          <Route path="/odayenileme" element={<OdaYenilemeHizmetleri />} />
-      
+          <Route path="/odayenileme" element={<OdaYenilemeHizmetleri />} />    
 <Route path="/odayenilemedetail/:id" element={<OdaYenilemeHizmetleriDetail />} />
+<Route path="/companyregister" element={<CompanyRegister />} />
+<Route path="/adminpanel" element={< AdminPanel />} />
       </Routes>
     </Router>
   );

@@ -18,18 +18,22 @@ function Login() {
       setServerError("");
       try {
         const response = await axios.post("http://localhost:3000/api/login", values);
-
         console.log("Giriş başarılı:", response.data);
 
-       
-        const token = response.data.token;
+        const { token, role } = response.data;
+
         if (token) {
           localStorage.setItem("token", token);
-          console.log("Token localStorage’a kaydedildi:", token);
+          localStorage.setItem("role", role);
+          console.log("Token ve rol localStorage’a kaydedildi:", { token, role });
         }
 
-      
-        navigate("/");
+        // 🔥 Role göre yönlendirme
+        if (role === "admin") {
+          navigate("/adminpanel");
+        } else {
+          navigate("/");
+        }
 
       } catch (error) {
         console.error(error);
@@ -66,7 +70,6 @@ function Login() {
             </div>
           )}
 
-       
           <div>
             <label className="block text-white/90 text-sm font-medium mb-3">E-posta</label>
             <input
@@ -78,7 +81,6 @@ function Login() {
             />
           </div>
 
-      
           <div className="mt-6">
             <label className="block text-white/90 text-sm font-medium mb-3">Şifre</label>
             <input
@@ -90,7 +92,6 @@ function Login() {
             />
           </div>
 
-       
           <button
             type="submit"
             disabled={LoginFormik.isSubmitting}

@@ -12,7 +12,7 @@ function AnaSayfa() {
   const dataAl = async () => {
     setLoading(true);
 
-    // Filtreye göre önce eski verileri temizle
+  
     if (filter === "ilan") setOdaYenileme([]);
     if (filter === "oda") setIlanlar([]);
     if (filter === "hepsi") {
