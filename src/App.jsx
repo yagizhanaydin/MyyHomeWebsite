@@ -10,6 +10,8 @@ import OdaYenilemeHizmetleri from './client/OdaYenilemeHizmetleri';
 import OdaYenilemeHizmetleriDetail from './client/OdaYenilemeHizmetleriDetail';
 import CompanyRegister from './company/CompanyRegister';
 import AdminPanel from './admin/AdminPanel';
+import Tekliflerim from './client/Tekliflerim'; // ✅ Burayı ekledik
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -22,10 +24,12 @@ function App() {
         <Route path="/" element={<AnaSayfa />} />
         <Route path="/ilanekleme" element={<AddIlan />} /> 
         <Route path="/ilandetail/:id" element={<IlanDetay />} />
-          <Route path="/odayenileme" element={<OdaYenilemeHizmetleri />} />    
-<Route path="/odayenilemedetail/:id" element={<OdaYenilemeHizmetleriDetail />} />
-<Route path="/companyregister" element={<CompanyRegister />} />
-<Route path="/adminpanel" element={< AdminPanel />} />
+        <Route path="/odayenileme" element={<OdaYenilemeHizmetleri />} />    
+        <Route path="/odayenilemedetail/:id" element={<OdaYenilemeHizmetleriDetail />} />
+        <Route path="/companyregister" element={<CompanyRegister />} />
+        <Route path="/adminpanel" element={<AdminPanel />} />
+     <Route path="/tekliflerim/:id?" element={<Tekliflerim />} />
+
       </Routes>
     </Router>
   );

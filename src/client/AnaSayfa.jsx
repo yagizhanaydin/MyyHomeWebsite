@@ -12,7 +12,6 @@ function AnaSayfa() {
   const dataAl = async () => {
     setLoading(true);
 
-  
     if (filter === "ilan") setOdaYenileme([]);
     if (filter === "oda") setIlanlar([]);
     if (filter === "hepsi") {
@@ -44,7 +43,7 @@ function AnaSayfa() {
 
   return (
     <div className="p-6">
-      {/* Başlık ve butonlar */}
+      {/* Başlık ve Butonlar */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Ana Sayfa</h1>
         <div className="flex gap-4">
@@ -59,6 +58,12 @@ function AnaSayfa() {
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
           >
             Oda Yenileme Hizmetleri
+          </button>
+          <button
+            onClick={() => navigate("/tekliflerim")}
+            className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg"
+          >
+            Tekliflerim
           </button>
         </div>
       </div>
