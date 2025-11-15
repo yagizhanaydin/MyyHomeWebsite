@@ -12,12 +12,12 @@ function Tekliflerim() {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          // Giriş yoksa login sayfasına yönlendir
+          
           navigate("/login");
           return;
         }
 
-        // Backend route’u: oda-yenileme/tekliflerim
+       
         const res = await axios.get("http://localhost:3000/oda-yenileme/tekliflerim", {
           headers: { Authorization: `Bearer ${token}` }
         });

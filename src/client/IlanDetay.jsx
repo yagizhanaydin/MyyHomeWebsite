@@ -14,8 +14,7 @@ function IlanDetay() {
       const response = await axios.get(`http://localhost:3000/home/ilandetail/${id}`);
       const home = response.data.home;
 
-      // Backend düzeltildiği için images işlemine gerek yok
-      // home.images zaten dizi olarak gelecek
+     
       
       setIlan(home);
     } catch (error) {
